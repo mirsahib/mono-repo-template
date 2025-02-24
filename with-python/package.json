@@ -1,24 +1,20 @@
 {
-  "name": "mono-frp",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
     "install:all": "yarn install && yarn run install:python",
     "install:python": "bash ./install-python.sh",
     "poetry:add":"bash ./poetry.sh"
   },
   "devDependencies": {
-    "prettier": "^3.5.0",
-    "turbo": "^2.4.2",
-    "typescript": "5.7.3"
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "turbo": "^2.4.2"
   },
-  "engines": {
-    "node": ">=18"
-  },
+  "name": "with-vite-react",
   "packageManager": "yarn@1.22.18",
   "workspaces": [
     "apps/*",
