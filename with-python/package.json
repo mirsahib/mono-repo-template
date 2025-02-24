@@ -7,7 +7,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "install:all": "yarn install && npm run install:python",
+    "install:all": "yarn install && yarn run install:python",
     "install:python": "bash ./install-python.sh",
     "poetry:add":"bash ./poetry.sh"
   },
