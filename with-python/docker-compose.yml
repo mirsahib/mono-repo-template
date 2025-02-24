@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./apps/web:/app/apps/web
+      - /app/apps/web/node_modules
+    networks:
+      - app_network
+  api:
+    container_name: server
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    restart: always
+    command: [
+          "poetry", "run","uvicorn","apps.server.main:app","--port", "8000"
+    ]
+    ports:
+      - 8000:8000
+    networks:
+      - app_network
+    
+  
+  admin:
+    container_name: admin
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    restart: always
+    ports:
+      - 3001:3001
+    volumes:
+      - ./apps/admin:/app/apps/admin
+      - /app/apps/admin/node_modules
+    networks:
+      - app_network
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    driver: bridge

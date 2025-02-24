@@ -13,7 +13,6 @@ const App = () => {
       console.log(data);
     };
     fetchData();
-
   }, []);
 
 	return (
@@ -28,7 +27,7 @@ const App = () => {
 					alt="TypeScript logo"
 				/>
 			</a>
-			<Header title="Hello Web" />
+			<Header title="Admin" />
 			<div className="card">
 				<Counter />
 			</div>
