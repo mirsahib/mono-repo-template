@@ -1,5 +1,5 @@
-# Use a lightweight Node.js image
-FROM node:18-alpine
+# Stage 1: Build Stage
+FROM node:18-alpine AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -24,10 +24,8 @@ RUN npm install --force
 COPY . .
 
 # Build the eslint-config and typescript-config packages (if needed)
-# These are typically not built, but ensure they are available for other packages
 RUN npm run build --workspace=packages/eslint-config || true
 RUN npm run build --workspace=packages/typescript-config || true
-
 
 # Build the ui package
 RUN npm run build --workspace=packages/ui || true
@@ -38,8 +36,17 @@ RUN cd apps/admin && npm install vite@3.2.5 rollup@2.79.0
 # Build the admin app
 RUN npm run build --workspace=apps/admin
 
+# Stage 2: Runtime Stage
+FROM node:18-alpine
+
+# Set the working directory inside the container
+WORKDIR /app
+
 # Install http-server globally to serve the static files
 RUN npm install -g http-server
+
+# Copy the built files from the builder stage
+COPY --from=builder /app/apps/admin/dist ./apps/admin/dist
 
 # Expose the port the app will run on
 EXPOSE 3001
